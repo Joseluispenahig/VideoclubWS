@@ -13,23 +13,22 @@ public class PeliculaRes {
 	private double preciopordia;
 	
 	/*Fecha de comienzo de la reserva/alquiler*/
-	private Calendar FechaInicio;
+	//private Calendar FechaInicio;
 	
 	/*Fecha de fin de la reserva/alquiler*/
-	private Calendar FechaFin;
+	//private Calendar FechaFin;
 	
 	/*
      *	Constructor de PeliculaRes
      */
-	public PeliculaRes(int id, String nombre, String genero, double preciopordia, 
-			Calendar fechaInicio, Calendar fechaFin) {
+	public PeliculaRes(int id, String nombre, String genero, double preciopordia) {
 		//super();
 		this.id = id;
 		this.nombre = nombre;
 		this.genero = genero;
 		this.preciopordia = preciopordia;
-		FechaInicio = fechaInicio;
-		FechaFin = fechaFin;
+		//FechaInicio = fechaInicio;
+		//FechaFin = fechaFin;
 	}
 	/*
      *	Getter Id
@@ -82,42 +81,51 @@ public class PeliculaRes {
 	/*
      *	Getter FechaInicio
      */
+	/*
 	public Calendar getFechaInicio() {
 		return FechaInicio;
 	}
+	*/
 	/*
      *	Setter FechaInicio
      */
+	/*
 	public void setFechaInicio(Calendar fechaInicio) {
 		FechaInicio = fechaInicio;
 	}
+	*/
 	/*
      *	Getter FechaFin
      */
+	/*
 	public Calendar getFechaFin() {
 		return FechaFin;
 	}
+	*/
 	/*
      *	Setter FechaFin
      */
-	public void setFechaFin(Calendar fechaFin) {
+	
+	/*public void setFechaFin(Calendar fechaFin) {
 		FechaFin = fechaFin;
 	}
+	*/
 	/*
      * Método que se encarga de calcular los dias entre la fecha de inicio y la fecha de fin
      * 
      */
+	/*
 	public static int getDiasRestantes(Calendar fechaInicial,Calendar fechaFinal){
 		int diffDays=0;
-		Calendar fechaTotal=fechaInicial;
-			if(fechaFinal.before(fechaTotal) || fechaTotal.equals(fechaFinal)){
+			if(fechaFinal.before(fechaInicial) || fechaInicial.equals(fechaFinal)){
 				diffDays=0;
 			}else{
-				while(fechaTotal.before(fechaFinal) || fechaTotal.equals(fechaFinal)){
+				while(fechaInicial.before(fechaFinal) || fechaInicial.equals(fechaFinal)){
 					diffDays++;
-					fechaTotal.add(Calendar.DATE, 1);
+					fechaInicial.add(Calendar.DATE, 1);
 				}
 			}
 			return diffDays==0?0:diffDays-1;
 	}
+	*/
 }

@@ -41,25 +41,56 @@ public class Videoclub {
 		System.out.println("-----------------------------\n");
     }
     
-    public void ReservarPelicula(int idpeli, int numCuenta) {
+    public void ReservarPelicula(int idpeli, String numCuenta, int numdias) {
     	//añadir pelicula a lista de peliculas reservadas y comprobaciones
-    	
+    	double precio;
     	for (Pelicula i: peldisponibles) {
-			if(i.getId()==idpeli) {
-				i.setCantidad(i.getCantidad()-1);		
+			if(i.getId()==idpeli) {		
+				i.setCantidad(i.getCantidad()-1);
+				PeliculaRes peliselec = new PeliculaRes(i.getId(),i.getNombre(),i.getGenero(),i.getPreciopordia());
+				precio = i.getPreciopordia();
 			}
     	}
+    	
+    	Cuenta cuenta = obtenerCuenta(numCuenta);
+    	cuenta.reservarPelicula(peliselec)
+    	retirar(numCuenta,precio*numdias);	
     }
     
-    public void DevolverPelicula(int idpeli, int numCuenta) {
+    public void DevolverPelicula(int idpeli, String numCuenta) {
     	//eliminar pelicula de la lista de peliculas reservadas y comprobaciones
-    	
+    	int idpeli;
     	
     	for (Pelicula i: peldisponibles) {
 			if(i.getId()==idpeli) {
-				i.setCantidad(i.getCantidad()+1);		
+				i.setCantidad(i.getCantidad()+1);	
+				idpeli = i.getId();
 			}
     	}
+    	Cuenta cuenta = obtenerCuenta(numCuenta);
+    	cuenta.devolverPelicula(idpeli);
+		boolean encontrada=false;
+		/* Actualizamos la lista de películas reservadas */
+	    listapelisres = cuenta.obtenerPeliculasRes();
+	    		/* Variable utilizada para llevar la cuenta de la posición donde se encuentra en la lista 
+	    		 * la película que queremos devolver */
+	    int indice = 0;
+	    		/* Recorremos la lista de películas reservadas */
+	    for (PeliculaRes i: listapelisres) {
+	    			/* Si encontramos la película, entramos */
+	    	if(i.getId()==idpeli) {
+	    		encontrada=true;
+	    				/* Eliminamos la película de la lista de películas reservadas */
+	    		c.devolverPelicula(indice);
+	    				/* Actualizamos la cantidad de películas disponibles */
+	    		System.out.println("Has devuelto la película con éxito\n");
+	    	}
+	    	indice++;
+	    }
+	    if(encontrada==false){
+	    			/* Si no se ha encontrado la película */
+	    	System.out.println("No se ha encontrado la película\n");
+	    }
     }
     
     public void crearCuenta(String numCuenta, Usuario usuario) throws Exception{
@@ -154,24 +185,20 @@ public class Videoclub {
     	
     	return usuario;
     }
-    public Cuenta[] cuentasDelUsuario(String dni,Strin numCuenta) throws Exception{
-    	Vector v=new Vector();
+    public Cuenta obtenerCuenta(String numCuenta) throws Exception{
+    	boolean encontrado=false;
+    	Cuenta cuenta=null;
     	for(int i=0; i<cuentas.size();i++) {
-    		if(((Cuenta)cuentas.get(i)).getUsuario().getDni().equals(dni)) {
-    			v.add((Cuenta)cuentas.get(i));
+    		if(((Cuenta)cuentas.get(i)).getNumCuenta().equals(numCuenta)) {
+    			cuenta=((Cuenta)cuentas.get(i));
+    			encontrado=true;
+    			i=cuentas.size(); // Para que no siga buscando
     		}
     	}
+    	if(encontrado==false)
+    		throw new Exception ("La cuenta no existe!");
     	
-    	if(v.size()==0)
-    		throw new Exception ("DNI no encontrado!");
-
-    	else {
-        	Cuenta[] cuenta=new Cuenta[v.size()];
-    		for(int i=0;i<v.size();i++) {
-    			cuenta[i]=(Cuenta)v.get(i);
-    		}
-        	return cuenta;
-    	}
+    	return cuenta;
     }
 
 }
