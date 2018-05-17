@@ -9,7 +9,7 @@ public class Cuenta implements java.io.Serializable {
     	this.numCuenta=numero;
     }
     public void setUsuario(Usuario usuario) {
-    	this.titular=titular;
+    	this.usuario=usuario;
     }
     public void setBalance(int balance) {
     	this.balance=balance;

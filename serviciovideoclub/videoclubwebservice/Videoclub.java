@@ -7,20 +7,20 @@ public class Videoclub {
 
     private Vector cuentas = null;
 
-    public Banco() {
+    public Videoclub() {
     	cuentas = new Vector();
     }
-    public void crearCuenta(String numCuenta, Titular titular) throws Exception{
-    	if(titular==null)
-    		throw new Exception ("Titular invalido!");
+    public void crearCuenta(String numCuenta, Usuario usuario) throws Exception{
+    	if(usuario==null)
+    		throw new Exception ("Usuario invalido!");
     	else {
     		int balance=0;
     		Cuenta cuenta=new Cuenta();
     		cuenta.setNumCuenta(numCuenta);
-    		cuenta.setTitular(titular);
+    		cuenta.setUsuario(usuario);
     		cuenta.setBalance(balance);
     		cuentas.add(cuenta);
-        	System.out.println("Cuenta :"+ numCuenta+" creada correctamente");
+        	System.out.println("Cuenta: "+ numCuenta+" creada correctamente");
     	}
     }
     
@@ -68,10 +68,10 @@ public class Videoclub {
     	if(encontrado==false)
     		throw new Exception ("La cuenta no existe!");
     }
-    public Cuenta[] cuentasDelTitular(String dni) throws Exception{
+    public Cuenta[] cuentasDelUsuario(String dni) throws Exception{
     	Vector v=new Vector();
     	for(int i=0; i<cuentas.size();i++) {
-    		if(((Cuenta)cuentas.get(i)).getTitular().getDni().equals(dni)) {
+    		if(((Cuenta)cuentas.get(i)).getUsuario().getDni().equals(dni)) {
     			v.add((Cuenta)cuentas.get(i));
     		}
     	}
@@ -87,12 +87,12 @@ public class Videoclub {
         	return cuenta;
     	}
     }
-    public Titular titularDeCuenta(String numCuenta) throws Exception{
+    public Usuario usuarioDeCuenta(String numCuenta) throws Exception{
     	boolean encontrado=false;
-    	Titular titular=null;
+    	Usuario usuario=null;
     	for(int i=0; i<cuentas.size();i++) {
     		if(((Cuenta)cuentas.get(i)).getNumCuenta().equals(numCuenta)) {
-    			titular=((Cuenta)cuentas.get(i)).getTitular();
+    			usuario=((Cuenta)cuentas.get(i)).getUsuario();
     			encontrado=true;
     			i=cuentas.size(); // Para que no siga buscando
     		}
@@ -100,7 +100,7 @@ public class Videoclub {
     	if(encontrado==false)
     		throw new Exception ("La cuenta no existe!");
     	
-    	return titular;
+    	return usuario;
     }
 
 }
