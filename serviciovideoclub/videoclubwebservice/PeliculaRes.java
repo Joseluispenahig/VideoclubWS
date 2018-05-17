@@ -109,12 +109,13 @@ public class PeliculaRes {
      */
 	public static int getDiasRestantes(Calendar fechaInicial,Calendar fechaFinal){
 		int diffDays=0;
-			if(fechaFinal.before(fechaInicial) || fechaInicial.equals(fechaFinal)){
+		Calendar fechaTotal=fechaInicial;
+			if(fechaFinal.before(fechaTotal) || fechaTotal.equals(fechaFinal)){
 				diffDays=0;
 			}else{
-				while(fechaInicial.before(fechaFinal) || fechaInicial.equals(fechaFinal)){
+				while(fechaTotal.before(fechaFinal) || fechaTotal.equals(fechaFinal)){
 					diffDays++;
-					fechaInicial.add(Calendar.DATE, 1);
+					fechaTotal.add(Calendar.DATE, 1);
 				}
 			}
 			return diffDays==0?0:diffDays-1;

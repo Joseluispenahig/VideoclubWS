@@ -1,32 +1,31 @@
 package videoclubwebservice;
 
 import java.util.Vector;
+import java.util.*;
 
 
 public class Videoclub {
 
     private Vector cuentas = null;
     List <Pelicula> peldisponibles;
-    List <Pelicula> pelreservadas;
-    pelreservadas = new LinkedList<Pelicula>();
+    List <PeliculaRes> pelreservadas;
+    String contraadmin="admin";
+    pelreservadas = new LinkedList<PeliculaRes>();
+    peldisponibles = new LinkedList<Pelicula>();
 
     public Videoclub() {
     	cuentas = new Vector();
     }
     
-    public void insertarPeliculas() throws Exception{
-    	peldisponibles = new LinkedList<Pelicula>();
-    	/*Se añade los atributos de las peliculas disponibles*/
-        String [] nombre={"007","Batman Begins"};
-    	String [] genero={"Accion","Accion"};
-    	int [] cantidad={1,2};
+    public void insertarPeliculas(String nombre,String genero,int cantidad,double preciopordia, String contrasena) throws Exception{
+    	if(contrasena.equals(contraadmin)) {
     	
     	/* Se generan las peliculas con los atributos correspondientes de cada una,para ello
     	 * usamos un bucle para ir rellenando la lista
     	 */
-    	for(int i=0;i<nombre.length;i++){
-    		Pelicula peli=new Pelicula(i,nombre[i],genero[i],cantidad[i]);
+    		Pelicula peli=new Pelicula(peldisponibles.size()+1,nombre,genero,cantidad,preciopordia);
     		peldisponibles.add(peli);
+    	}
     	}
     }
     
@@ -42,7 +41,7 @@ public class Videoclub {
 		System.out.println("-----------------------------\n");
     }
     
-    public void ReservarPelicula(int idpeli, int idusuario) {
+    public void ReservarPelicula(int idpeli, int numCuenta) {
     	//añadir pelicula a lista de peliculas reservadas y comprobaciones
     	
     	for (Pelicula i: peldisponibles) {
@@ -52,7 +51,7 @@ public class Videoclub {
     	}
     }
     
-    public void DevolverPelicula(int idpeli, int idusuario) {
+    public void DevolverPelicula(int idpeli, int numCuenta) {
     	//eliminar pelicula de la lista de peliculas reservadas y comprobaciones
     	
     	
@@ -154,6 +153,25 @@ public class Videoclub {
     		throw new Exception ("La cuenta no existe!");
     	
     	return usuario;
+    }
+    public Cuenta[] cuentasDelUsuario(String dni,Strin numCuenta) throws Exception{
+    	Vector v=new Vector();
+    	for(int i=0; i<cuentas.size();i++) {
+    		if(((Cuenta)cuentas.get(i)).getUsuario().getDni().equals(dni)) {
+    			v.add((Cuenta)cuentas.get(i));
+    		}
+    	}
+    	
+    	if(v.size()==0)
+    		throw new Exception ("DNI no encontrado!");
+
+    	else {
+        	Cuenta[] cuenta=new Cuenta[v.size()];
+    		for(int i=0;i<v.size();i++) {
+    			cuenta[i]=(Cuenta)v.get(i);
+    		}
+        	return cuenta;
+    	}
     }
 
 }

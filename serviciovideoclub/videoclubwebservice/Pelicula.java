@@ -3,7 +3,7 @@ public class Pelicula {
 	private int id;
 	private String nombre;
 	private String genero;
-	private String cantidad;
+	private int cantidad;
 	private double preciopordia;
 	
 	public Pelicula(int id, String nombre, String genero, int cantidad, double preciopordia) {
@@ -28,7 +28,7 @@ public class Pelicula {
 		return this.genero;
 	}
 	
-	public String getCantidad() {
+	public int getCantidad() {
 		return this.cantidad;
 	}
 	
@@ -48,7 +48,7 @@ public class Pelicula {
 		this.genero = genero;
 	}
 	
-	public void setCantidad(String cantidad) {
+	public void setCantidad(int cantidad) {
 		this.cantidad = cantidad;
 	}
 	

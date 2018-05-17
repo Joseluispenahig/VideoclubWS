@@ -5,6 +5,7 @@ public class Usuario implements java.io.Serializable {
     private String nombre;
     private String dni;
     
+    
     public void setId(int id) {
 	this.id=id;
     }
@@ -26,4 +27,5 @@ public class Usuario implements java.io.Serializable {
     	return this.dni;
     }
 
+    
 }

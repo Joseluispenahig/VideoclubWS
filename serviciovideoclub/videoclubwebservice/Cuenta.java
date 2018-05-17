@@ -4,6 +4,7 @@ public class Cuenta implements java.io.Serializable {
     private String numCuenta;
     private Usuario usuario;
     private int balance;
+    private List<PeliculaRes> peliculaRes;
     
     public void setNumCuenta(String numero) {
     	this.numCuenta=numero;
@@ -34,4 +35,28 @@ public class Cuenta implements java.io.Serializable {
     		this.balance=this.balance-cantidad;
     	
     }
+    /*
+     * Método que se encarga de añadir la pelicula seleccionada en la lista 
+     * de peliculas reservadas por el usuario
+     * 
+     */
+    public void reservarPelicula(PeliculaRes pelicula) throws Exception{
+    	peliculasRes.add(pelicula);
+    }
+    
+    /*
+     * Método que se encarga de quitar la pelicula con un id de la lista 
+     * de peliculas reservadas por el usuario
+     * 
+     */
+    public void devolverPelicula(int id) throws Exception{
+    		peliculasRes.remove(id); 	
+}
+    /*
+     * Método que se encarga de obtener la lista de peliculas reservadas por el usuario
+     * 
+     */
+    public List<PeliculaRes> obtenerPeliculasReservadas() throws Exception{
+    	return peliculasRes;
+}
 }
