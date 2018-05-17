@@ -6,10 +6,63 @@ import java.util.Vector;
 public class Videoclub {
 
     private Vector cuentas = null;
+    List <Pelicula> peldisponibles;
+    List <Pelicula> pelreservadas;
+    pelreservadas = new LinkedList<Pelicula>();
 
     public Videoclub() {
     	cuentas = new Vector();
     }
+    
+    public void insertarPeliculas() throws Exception{
+    	peldisponibles = new LinkedList<Pelicula>();
+    	/*Se añade los atributos de las peliculas disponibles*/
+        String [] nombre={"007","Batman Begins"};
+    	String [] genero={"Accion","Accion"};
+    	int [] cantidad={1,2};
+    	
+    	/* Se generan las peliculas con los atributos correspondientes de cada una,para ello
+    	 * usamos un bucle para ir rellenando la lista
+    	 */
+    	for(int i=0;i<nombre.length;i++){
+    		Pelicula peli=new Pelicula(i,nombre[i],genero[i],cantidad[i]);
+    		peldisponibles.add(peli);
+    	}
+    }
+    
+    public List<Pelicula> obtenerPeliculas() throws Exception{
+    	for (Pelicula i: peldisponibles) {
+			System.out.println("-----------------------------");
+			System.out.println("ID de la película: " + i.getId());
+			System.out.println("Nombre de la película: " + i.getNombre());
+			System.out.println("Género: " + i.getTipo());
+			System.out.println("Cantidad disponible: " + i.getNumero());
+			System.out.println("Precio/dia: " + i.getPreciopordia());
+		}
+		System.out.println("-----------------------------\n");
+    }
+    
+    public void ReservarPelicula(int idpeli, int idusuario) {
+    	//añadir pelicula a lista de peliculas reservadas y comprobaciones
+    	
+    	for (Pelicula i: peldisponibles) {
+			if(i.getId()==idpeli) {
+				i.setCantidad(i.getCantidad()-1);		
+			}
+    	}
+    }
+    
+    public void DevolverPelicula(int idpeli, int idusuario) {
+    	//eliminar pelicula de la lista de peliculas reservadas y comprobaciones
+    	
+    	
+    	for (Pelicula i: peldisponibles) {
+			if(i.getId()==idpeli) {
+				i.setCantidad(i.getCantidad()+1);		
+			}
+    	}
+    }
+    
     public void crearCuenta(String numCuenta, Usuario usuario) throws Exception{
     	if(usuario==null)
     		throw new Exception ("Usuario invalido!");
