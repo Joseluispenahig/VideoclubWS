@@ -1,3 +1,4 @@
+package videoclubwebservice;
 
 public class Pelicula {
 	private int id;

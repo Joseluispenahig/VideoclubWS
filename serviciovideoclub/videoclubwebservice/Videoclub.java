@@ -3,18 +3,18 @@ package videoclubwebservice;
 import java.util.Vector;
 import java.util.*;
 
-
 public class Videoclub {
 
     private Vector cuentas = null;
     List <Pelicula> peldisponibles;
     List <PeliculaRes> pelreservadas;
     String contraadmin="admin";
-    pelreservadas = new LinkedList<PeliculaRes>();
-    peldisponibles = new LinkedList<Pelicula>();
+    
 
     public Videoclub() {
     	cuentas = new Vector();
+    	pelreservadas = new LinkedList<PeliculaRes>();
+        peldisponibles = new LinkedList<Pelicula>();
     }
     
     public void insertarPeliculas(String nombre,String genero,int cantidad,double preciopordia, String contrasena) throws Exception{
@@ -26,41 +26,42 @@ public class Videoclub {
     		Pelicula peli=new Pelicula(peldisponibles.size()+1,nombre,genero,cantidad,preciopordia);
     		peldisponibles.add(peli);
     	}
-    	}
     }
     
-    public List<Pelicula> obtenerPeliculas() throws Exception{
+    public void obtenerPeliculas() throws Exception{
     	for (Pelicula i: peldisponibles) {
 			System.out.println("-----------------------------");
 			System.out.println("ID de la película: " + i.getId());
 			System.out.println("Nombre de la película: " + i.getNombre());
-			System.out.println("Género: " + i.getTipo());
-			System.out.println("Cantidad disponible: " + i.getNumero());
+			System.out.println("Género: " + i.getGenero());
+			System.out.println("Cantidad disponible: " + i.getCantidad());
 			System.out.println("Precio/dia: " + i.getPreciopordia());
 		}
 		System.out.println("-----------------------------\n");
+		
     }
     
-    public void ReservarPelicula(int idpeli, String numCuenta, int numdias) {
+    public void ReservarPelicula(int idpeli, String numCuenta, int numdias) throws Exception {
     	//añadir pelicula a lista de peliculas reservadas y comprobaciones
-    	double precio;
+    	double precio=0.0;
+    	PeliculaRes peliselec=null;
     	for (Pelicula i: peldisponibles) {
 			if(i.getId()==idpeli) {		
 				i.setCantidad(i.getCantidad()-1);
-				PeliculaRes peliselec = new PeliculaRes(i.getId(),i.getNombre(),i.getGenero(),i.getPreciopordia());
+				peliselec = new PeliculaRes(i.getId(),i.getNombre(),i.getGenero(),i.getPreciopordia());
 				precio = i.getPreciopordia();
 			}
     	}
     	
     	Cuenta cuenta = obtenerCuenta(numCuenta);
-    	cuenta.reservarPelicula(peliselec)
+    	cuenta.reservarPelicula(peliselec);
     	retirar(numCuenta,precio*numdias);	
     }
     
-    public void DevolverPelicula(int idpeli, String numCuenta) {
+    public void DevolverPelicula(int idpeli, String numCuenta) throws Exception{
     	//eliminar pelicula de la lista de peliculas reservadas y comprobaciones
-    	int idpeli;
     	
+    	List <PeliculaRes> listapelisres;
     	for (Pelicula i: peldisponibles) {
 			if(i.getId()==idpeli) {
 				i.setCantidad(i.getCantidad()+1);	
@@ -71,7 +72,7 @@ public class Videoclub {
     	cuenta.devolverPelicula(idpeli);
 		boolean encontrada=false;
 		/* Actualizamos la lista de películas reservadas */
-	    listapelisres = cuenta.obtenerPeliculasRes();
+	    listapelisres = cuenta.obtenerPeliculasReservadas();
 	    		/* Variable utilizada para llevar la cuenta de la posición donde se encuentra en la lista 
 	    		 * la película que queremos devolver */
 	    int indice = 0;
@@ -81,7 +82,7 @@ public class Videoclub {
 	    	if(i.getId()==idpeli) {
 	    		encontrada=true;
 	    				/* Eliminamos la película de la lista de películas reservadas */
-	    		c.devolverPelicula(indice);
+	    		cuenta.devolverPelicula(indice);
 	    				/* Actualizamos la cantidad de películas disponibles */
 	    		System.out.println("Has devuelto la película con éxito\n");
 	    	}
@@ -137,7 +138,7 @@ public class Videoclub {
     		throw new Exception ("La cuenta no existe!");
 
     }
-    public void retirar(String numCuenta, int cantidad) throws Exception{
+    public void retirar(String numCuenta, double cantidad) throws Exception{
     	boolean encontrado=false;
     	for(int i=0; i<cuentas.size();i++) {
     		if(((Cuenta)cuentas.get(i)).getNumCuenta().equals(numCuenta)) {

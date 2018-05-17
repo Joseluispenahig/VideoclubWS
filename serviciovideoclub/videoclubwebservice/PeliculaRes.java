@@ -1,3 +1,4 @@
+package videoclubwebservice;
 
 public class PeliculaRes {
 	/*Identificador de la película*/
