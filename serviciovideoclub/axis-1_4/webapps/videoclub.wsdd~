@@ -4,7 +4,7 @@
      <service name="Videoclub" provider="java:RPC">
 
       <parameter name="scope" value="application"/>
-      <parameter name="className" value="videoclubwebservice.Videoclub"/>
+      <parameter name="className" value="videovlubwebservice.Videoclub"/>
       <parameter name="allowedMethods" value="*"/>
 
       <beanMapping qname="ns:Cuenta" xmlns:ns="http://www.uc3m.es/WS/Videoclub"

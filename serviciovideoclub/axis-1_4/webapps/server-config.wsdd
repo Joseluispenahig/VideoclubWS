@@ -5,9 +5,9 @@
   <parameter name="enableNamespacePrefixOptimization" value="false"/>
   <parameter name="dotNetSoapEncFix" value="true"/>
   <parameter name="disablePrettyXML" value="true"/>
-  <parameter name="attachments.implementation" value="org.apache.axis.attachments.AttachmentsImpl"/>
-  <parameter name="sendXsiTypes" value="true"/>
   <parameter name="sendMultiRefs" value="true"/>
+  <parameter name="sendXsiTypes" value="true"/>
+  <parameter name="attachments.implementation" value="org.apache.axis.attachments.AttachmentsImpl"/>
   <parameter name="sendXMLDeclaration" value="true"/>
   <requestFlow>
    <handler type="java:org.apache.axis.handlers.JWSHandler">
@@ -28,17 +28,21 @@
   <parameter name="className" value="org.apache.axis.utils.Admin"/>
   <namespace>http://xml.apache.org/axis/wsdd/</namespace>
  </service>
- <service name="Banco" provider="java:RPC">
-  <parameter name="allowedMethods" value="*"/>
-  <parameter name="className" value="bancowebservice.Banco"/>
-  <parameter name="scope" value="application"/>
-  <beanMapping languageSpecificType="java:bancowebservice.Cuenta" qname="ns1:Cuenta" xmlns:ns1="http://www.uc3m.es/WS/Banco"/>
-  <beanMapping languageSpecificType="java:bancowebservice.Titular" qname="ns2:Titular" xmlns:ns2="http://www.uc3m.es/WS/Banco"/>
-  <arrayMapping innerType="ns3:Cuenta" languageSpecificType="java:bancowebservice.Cuenta[]" qname="ns3:ArrayOfCuenta" xmlns:ns3="http://www.uc3m.es/WS/Banco"/>
- </service>
  <service name="Version" provider="java:RPC">
   <parameter name="allowedMethods" value="getVersion"/>
   <parameter name="className" value="org.apache.axis.Version"/>
+ </service>
+ <service name="Videoclub" provider="java:RPC">
+  <parameter name="allowedMethods" value="*"/>
+  <parameter name="className" value="videoclubwebservice.Videoclub"/>
+  <parameter name="scope" value="application"/>
+  <beanMapping languageSpecificType="java:videoclubwebservice.Cuenta" qname="ns1:Cuenta" xmlns:ns1="http://www.uc3m.es/WS/Videoclub"/>
+  <beanMapping languageSpecificType="java:videoclubwebservice.Usuario" qname="ns2:Usuario" xmlns:ns2="http://www.uc3m.es/WS/Videoclub"/>
+  <beanMapping languageSpecificType="java:videoclubwebservice.Pelicula" qname="ns3:Pelicula" xmlns:ns3="http://www.uc3m.es/WS/Videoclub"/>
+  <beanMapping languageSpecificType="java:videoclubwebservice.PeliculaRes" qname="ns4:PeliculaRes" xmlns:ns4="http://www.uc3m.es/WS/Videoclub"/>
+  <arrayMapping innerType="ns5:Cuenta" languageSpecificType="java:videoclubwebservice.Cuenta[]" qname="ns5:ArrayOfCuenta" xmlns:ns5="http://www.uc3m.es/WS/Videoclub"/>
+  <arrayMapping innerType="ns6:Pelicula" languageSpecificType="java:videoclubwebservice.Pelicula[]" qname="ns6:ArrayOfPelicula" xmlns:ns6="http://www.uc3m.es/WS/Videoclub"/>
+  <arrayMapping innerType="ns7:PeliculaRes" languageSpecificType="java:videoclubwebservice.PeliculaRes[]" qname="ns7:ArrayOfPeliculaRes" xmlns:ns7="http://www.uc3m.es/WS/Videoclub"/>
  </service>
  <transport name="http">
   <requestFlow>
