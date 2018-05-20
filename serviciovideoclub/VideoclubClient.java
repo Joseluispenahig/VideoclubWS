@@ -1,5 +1,7 @@
 import es.uc3m.www.WS.Videoclub.*;
 import alfonso_portatil.axis.services.Videoclub.*;
+import videoclubwebservice.Pelicula;
+import java.util.*;
 
 public class VideoclubClient {
 	public static void main(String[] args) throws Exception {
@@ -77,8 +79,9 @@ public class VideoclubClient {
 			} else
 				System.out.println("Uso: obtenerusuario numerodecuenta");
 		} else if (args[0].equals("insertarpeli")) {
-			if (args.length == 5) {
+			if (args.length == 6) {
 				try {
+					System.out.println("Prueba");
 					port.insertarPeliculas(args[1], args[2], Integer.parseInt(args[3]), Double.parseDouble(args[4]),
 							args[5]);
 					System.out.println("Pelicula insertada");
@@ -108,6 +111,17 @@ public class VideoclubClient {
 			if (args.length == 1) {
 				try {
 					port.obtenerPeliculas();
+					/*
+					for (Pelicula i : peldisponibles) {
+						System.out.println("-----------------------------");
+						System.out.println("ID de la película: " + i.getId());
+						System.out.println("Nombre de la película: " + i.getNombre());
+						System.out.println("Género: " + i.getGenero());
+						System.out.println("Cantidad disponible: " + i.getCantidad());
+						System.out.println("Precio/dia: " + i.getPreciopordia());
+					}
+					System.out.println("-----------------------------\n");
+					*/
 				} catch (Exception e) {
 					System.out.println(e);
 				}

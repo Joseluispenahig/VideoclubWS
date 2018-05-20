@@ -74,6 +74,7 @@ public class Videoclub {
 			}
 		}
 		Cuenta cuenta = obtenerCuenta(numCuenta);
+		cuenta.devolverPelicula(idpeli);
 		boolean encontrada = false;
 		/* Actualizamos la lista de películas reservadas */
 		listapelisres = cuenta.obtenerPeliculasReservadas();
