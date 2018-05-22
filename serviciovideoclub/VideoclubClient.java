@@ -35,7 +35,10 @@ public class VideoclubClient {
 		else if (args[0].equals("ingresar")) {
 			if (args.length == 3) {
 				try {
+					Cuenta cuenta = port.obtenerCuenta(args[1]);
 					port.ingresar(args[1], Integer.parseInt(args[2]));
+					System.out.println("Se han ingresado " + args[2] + "€");
+					System.out.println("Cantidad total: " + cuenta.getBalance() + "€");
 				} catch (Exception e) {
 					System.out.println(e);
 				}
@@ -44,7 +47,9 @@ public class VideoclubClient {
 		} else if (args[0].equals("retirar")) {
 			if (args.length == 3) {
 				try {
+					Cuenta cuenta = port.obtenerCuenta(args[1]);
 					port.retirar(args[1], Integer.parseInt(args[2]));
+					System.out.println("Cantidad restante: " + cuenta.getBalance() + "€");
 				} catch (Exception e) {
 					System.out.println(e);
 				}
@@ -81,8 +86,8 @@ public class VideoclubClient {
 		} else if (args[0].equals("insertarpeli")) {
 			if (args.length == 6) {
 				try {
-					System.out.println("Prueba");
-					port.insertarPeliculas(args[1], args[2], Integer.parseInt(args[3]), Double.parseDouble(args[4]),
+					port.insertarPeliculas(args[1], args[2], Integer.parseInt(args[3]), 
+							Double.parseDouble(args[4]),
 							args[5]);
 					System.out.println("Pelicula insertada");
 				} catch (Exception e) {
@@ -93,6 +98,8 @@ public class VideoclubClient {
 			if (args.length == 4) {
 				try {
 					port.reservarPelicula(Integer.parseInt(args[1]), args[2], Integer.parseInt(args[3]));
+					Cuenta cuenta = port.obtenerCuenta(args[2]);
+					System.out.println("Cantidad restante: " + cuenta.getBalance() + "€");
 					System.out.println("Pelicula reservada");
 				} catch (Exception e) {
 					System.out.println(e);
@@ -110,18 +117,17 @@ public class VideoclubClient {
 		} else if (args[0].equals("obtenerpelis")) {
 			if (args.length == 1) {
 				try {
-					port.obtenerPeliculas();
-					/*
-					for (Pelicula i : peldisponibles) {
-						System.out.println("-----------------------------");
-						System.out.println("ID de la película: " + i.getId());
-						System.out.println("Nombre de la película: " + i.getNombre());
-						System.out.println("Género: " + i.getGenero());
-						System.out.println("Cantidad disponible: " + i.getCantidad());
-						System.out.println("Precio/dia: " + i.getPreciopordia());
-					}
-					System.out.println("-----------------------------\n");
-					*/
+					String pelis = port.obtenerPeliculas();
+					System.out.println(pelis);
+				} catch (Exception e) {
+					System.out.println(e);
+				}
+			}
+		} else if (args[0].equals("obtenerpelisreservadas")) {
+			if (args.length == 2) {
+				try {
+					String pelis = port.obtenerPelisReservadas(args[1]);
+					System.out.println(pelis);
 				} catch (Exception e) {
 					System.out.println(e);
 				}

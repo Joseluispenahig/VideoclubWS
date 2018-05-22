@@ -29,17 +29,18 @@ public class Videoclub {
 		}
 	}
 
-	public void obtenerPeliculas() throws Exception {
+	public String obtenerPeliculas() throws Exception {
+		String peliculas = "";
 		for (Pelicula i : peldisponibles) {
-			System.out.println("-----------------------------");
-			System.out.println("ID de la película: " + i.getId());
-			System.out.println("Nombre de la película: " + i.getNombre());
-			System.out.println("Género: " + i.getGenero());
-			System.out.println("Cantidad disponible: " + i.getCantidad());
-			System.out.println("Precio/dia: " + i.getPreciopordia());
+			peliculas = peliculas + "----------------------";
+			peliculas = peliculas + "\nID: " + i.getId();
+			peliculas = peliculas + "\nNombre: " + i.getNombre();
+			peliculas = peliculas + "\nGenero: " + i.getGenero();
+			peliculas = peliculas + "\nCantidad: " + i.getCantidad();
+			peliculas = peliculas + "\nPrecio por dia: " + i.getPreciopordia();
 		}
-		System.out.println("-----------------------------\n");
-
+		peliculas = peliculas + "\n----------------------";
+		return peliculas;
 	}
 
 	public void ReservarPelicula(int idpeli, String numCuenta, int numdias) throws Exception {
@@ -50,15 +51,11 @@ public class Videoclub {
 			if (i.getId() == idpeli) {
 				i.setCantidad(i.getCantidad() - 1);
 				peliselec = new PeliculaRes(i.getId(), i.getNombre(), i.getGenero(), i.getPreciopordia());
-				System.out.println("Llego aqui");
 				precio = i.getPreciopordia();
-				System.out.println("Llego aqui2");
 				Cuenta cuenta = obtenerCuenta(numCuenta);
-				System.out.println("Llego aqui4");
 				cuenta.reservarPelicula(peliselec);
-				System.out.println("Llego aqui5");
+				System.out.println("Cuenta número " + numCuenta + " ha reservado la película con éxito\n");
 				retirar(numCuenta, precio * numdias);
-				System.out.println("Llego aqui6");
 			}
 		}
 	}
@@ -90,7 +87,7 @@ public class Videoclub {
 				/* Eliminamos la película de la lista de películas reservadas */
 				cuenta.devolverPelicula(indice);
 				/* Actualizamos la cantidad de películas disponibles */
-				System.out.println("Has devuelto la película con éxito\n");
+				System.out.println("Cuenta número " + numCuenta + " ha devuelto la película con éxito\n");
 			}
 			indice++;
 		}
@@ -213,6 +210,21 @@ public class Videoclub {
 			throw new Exception("La cuenta no existe!");
 
 		return cuenta;
+	}
+	
+	public String obtenerPelisReservadas(String numCuenta) throws Exception {
+		Cuenta cuenta = obtenerCuenta(numCuenta);
+		pelreservadas = cuenta.obtenerPeliculasReservadas();
+		String peliculas = "";
+		for (PeliculaRes i : pelreservadas) {
+			peliculas = peliculas + "----------------------";
+			peliculas = peliculas + "\nID: " + i.getId();
+			peliculas = peliculas + "\nNombre: " + i.getNombre();
+			peliculas = peliculas + "\nGenero: " + i.getGenero();
+			peliculas = peliculas + "\nPrecio por dia: " + i.getPreciopordia();
+		}
+		peliculas = peliculas + "\n----------------------";
+		return peliculas;
 	}
 
 }
