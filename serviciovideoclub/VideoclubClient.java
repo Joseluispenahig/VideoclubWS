@@ -1,4 +1,5 @@
 import es.uc3m.www.WS.Videoclub.*;
+import java.lang.*;
 import alfonso_portatil.axis.services.Videoclub.*;
 import videoclubwebservice.Pelicula;
 import java.util.*;
@@ -35,9 +36,10 @@ public class VideoclubClient {
 		else if (args[0].equals("ingresar")) {
 			if (args.length == 3) {
 				try {
-					Cuenta cuenta = port.obtenerCuenta(args[1]);
+					
 					port.ingresar(args[1], Integer.parseInt(args[2]));
 					System.out.println("Se han ingresado " + args[2] + "€");
+					Cuenta cuenta = port.obtenerCuenta(args[1]);
 					System.out.println("Cantidad total: " + cuenta.getBalance() + "€");
 				} catch (Exception e) {
 					System.out.println(e);
@@ -49,6 +51,7 @@ public class VideoclubClient {
 				try {
 					Cuenta cuenta = port.obtenerCuenta(args[1]);
 					port.retirar(args[1], Integer.parseInt(args[2]));
+					cuenta = port.obtenerCuenta(args[1]);
 					System.out.println("Cantidad restante: " + cuenta.getBalance() + "€");
 				} catch (Exception e) {
 					System.out.println(e);
